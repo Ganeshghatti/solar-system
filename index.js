@@ -36,6 +36,9 @@ controls.enablePan = false;
 controls.minDistance = 50;
 controls.maxDistance = 900;
 camera.position.set(-130, 40, 50);
+if (window.innerWidth<600) {
+  camera.position.set(-250, 40, 50);
+}
 controls.update();
 
 const ambientLight = new THREE.AmbientLight(0x333333);
@@ -140,33 +143,34 @@ window.addEventListener("resize", function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-
 function createOrbit(radius) {
-    const curve = new THREE.CatmullRomCurve3(getOrbitPoints(radius));
-    const points = curve.getPoints(100);
-    const orbitGeo = new THREE.BufferGeometry().setFromPoints(points);
-    const orbitMat = new THREE.LineBasicMaterial({ color: 0xffffff });
-    const orbit = new THREE.Line(orbitGeo, orbitMat);
-    scene.add(orbit);
+  const curve = new THREE.CatmullRomCurve3(getOrbitPoints(radius));
+  const points = curve.getPoints(100);
+  const orbitGeo = new THREE.BufferGeometry().setFromPoints(points);
+  const orbitMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+  const orbit = new THREE.Line(orbitGeo, orbitMat);
+  scene.add(orbit);
+}
+
+function getOrbitPoints(radius) {
+  const points = [];
+  for (let i = 0; i < 2 * Math.PI; i += 0.1) {
+    points.push(
+      new THREE.Vector3(radius * Math.cos(i), 0, radius * Math.sin(i))
+    );
   }
-  
-  function getOrbitPoints(radius) {
-    const points = [];
-    for (let i = 0; i < 2 * Math.PI; i += 0.1) {
-      points.push(new THREE.Vector3(radius * Math.cos(i), 0, radius * Math.sin(i)));
-    }
-    return points;
-  }
-  
-  // Create orbits for each planet (add this before the animate function)
-  createOrbit(28); // Mercury
-  createOrbit(44); // Venus
-  createOrbit(62); // Earth
-  createOrbit(78); // Mars
-  createOrbit(100); // Jupiter
-  createOrbit(138); // Saturn
-  createOrbit(176); // Uranus
-  createOrbit(200); // Neptune
+  return points;
+}
+
+// Create orbits for each planet (add this before the animate function)
+createOrbit(28); // Mercury
+createOrbit(44); // Venus
+createOrbit(62); // Earth
+createOrbit(78); // Mars
+createOrbit(100); // Jupiter
+createOrbit(138); // Saturn
+createOrbit(176); // Uranus
+createOrbit(200); // Neptune
 
 canvas.addEventListener("click", onCanvasClick);
 
@@ -261,8 +265,10 @@ function planetsdata(name) {
 
 const layer = document.getElementsByClassName("layer")[0];
 layer.addEventListener("click", closef);
-document.getElementsByClassName("fa-xmark")[0].addEventListener("click",closef);
+document
+  .getElementsByClassName("fa-xmark")[0]
+  .addEventListener("click", closef);
 function closef() {
-    document.getElementsByClassName("container")[0].style.display = "none";
-    document.getElementsByClassName("layer")[0].style.display = "none";
+  document.getElementsByClassName("container")[0].style.display = "none";
+  document.getElementsByClassName("layer")[0].style.display = "none";
 }
