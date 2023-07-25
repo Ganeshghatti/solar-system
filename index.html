@@ -4,18 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solar System</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
     <style>
       body {
         margin: 0;
       }
-      .threejs{
+      .threejs {
+        width: 100vw;
+        height: 99.6vh;
+        overflow: hidden;
+      }
+      .layer {
         width: 100vw;
         height: 100vh;
+        background-color: rgba(128, 128, 128, 0.348);
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+      }
+      .container {
+        overflow: hidden;
+        position: absolute;
+        z-index: 3;
+        gap: 15px;
+        display: flex;
+        flex-direction: column;
+        color: white;
+        border: 2px solid white;
+        width: 30vw;
+        right: 0;
+        top: 0;
+        padding: 30px 3vw;
+        display: none;
+      }
+      p {
+        font-size: clamp(20px,2vw,35px);
+        margin: 0;
+      }
+      .name {
+        text-align: center;
+        font-size: clamp(40px,4vw,65px);
+        padding-bottom: 20px;
+      }
+      .fa-xmark{
+        position: absolute;
+        top: 3vh;
+        right: 3vw;
+        font-size: clamp(30px,3vw,50px);
+        cursor: pointer;
+      }
+      @media screen and (max-width: 1100px) {
+        .container{
+          width: 35vw;
+        }
+      }
+      @media screen and (max-width: 700px) {
+        .container{
+          width: 50vw;
+        }
+      }
+      @media screen and (max-width: 500px) {
+        p {
+        font-size: clamp(15px,1vw,25px);
+      }
+      .name {
+        font-size: clamp(25px,2vw,35px);
+      }
+      .fa-xmark{
+        font-size: clamp(15px,1vw,25px);
+      }
       }
     </style>
   </head>
   <body>
-    <canvas class="threejs"></canvas>
     <script
       async
       src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"
@@ -29,6 +96,16 @@
         }
       }
     </script>
+    <canvas class="threejs"></canvas>
+    <div class="layer"></div>
+    <div class="container">
+      <p class="name"></p>
+      <p><strong> Mass : </strong><span class="mass"></span></p>
+      <p><strong> Radius : </strong><span class="radius"></span></p>
+      <p><strong> Temperature : </strong> <span class="temperature"></span></p>
+      <p><strong> Period : </strong> <span class="period"></span></p>
+      <i class="fa-solid fa-xmark"></i>
+    </div>
     <script type="module" src="/index.js"></script>
   </body>
 </html>
